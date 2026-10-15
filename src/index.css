@@ -1,0 +1,229 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===============================================
+   BASE STYLES - Estilos base globales para la app
+   =============================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html.lenis,
+html.lenis body {
+    height: auto;
+}
+
+.lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+    overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+    pointer-events: none;
+}
+
+body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background-color: #f8fafc;
+    color: #0F172A;
+    /* Updated dark slate */
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===============================================
+   SCROLLBAR STYLES - Barras de desplazamiento
+   =============================================== */
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* ===============================================
+   UTILITY CLASSES - Clases utilitarias personalizadas
+   =============================================== */
+
+.glass-effect {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+}
+
+.card-hover {
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.1), 0 4px 12px -3px rgba(43, 182, 115, 0.08);
+    /* slight primary tint on lift */
+}
+
+/* ===============================================
+   FORM STYLES - Estilos para formularios
+   =============================================== */
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(43, 182, 115, 0.3);
+    /* Custom light green ring */
+    border-color: #2bb673;
+}
+
+/* Hide number input spinners/arrows */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+/* ===============================================
+   TABLE STYLES - Estilos para tablas
+   =============================================== */
+
+.table-row-hover:hover {
+    background-color: #f8fafc;
+}
+
+/* ===============================================
+   ANIMATIONS - Animaciones personalizadas
+   =============================================== */
+
+@keyframes pulse-soft {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.7;
+    }
+}
+
+.animate-pulse-soft {
+    animation: pulse-soft 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Base custom classes for elements */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 9999px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1;
+}
+
+.badge-green {
+    background-color: #eaf7f0;
+    color: #1a754b;
+}
+
+.badge-red {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.badge-amber {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+/* Low stock alert animation */
+.low-stock-alert {
+    animation: pulse-soft 1.5s ease-in-out infinite;
+}
+
+/* ===============================================
+   PRINT STYLES - Estilos para impresion (Recibos termicos)
+   =============================================== */
+
+@media print {
+
+    /* Ocultar toda la interfaz de la aplicacion principal */
+    body>div:not(.print-receipt-container) {
+        display: none !important;
+    }
+
+    /* Configuracion de la pagina para impresora termica de 80mm */
+    @page {
+        margin: 0;
+        size: 80mm auto;
+        /* Ancho termico estandar */
+    }
+
+    /* El contenedor del recibo toma el control */
+    body {
+        background-color: white !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    .print-receipt-container {
+        display: block !important;
+        width: 72mm;
+        /* Dejamos margen para que no corte (80mm real) */
+        margin: 0 auto;
+        padding: 10px 0;
+        font-family: monospace, sans-serif !important;
+        /* Fuente clara y legible sin antialiasing avanzado */
+        color: black !important;
+        background: white !important;
+    }
+
+    /* Forzar colores de fondo e impresion nitida */
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+}
+
+/* En pantalla normal, ocultamos el recibo imprimible */
+@media screen {
+    .print-receipt-container {
+        display: none !important;
+    }
+}
